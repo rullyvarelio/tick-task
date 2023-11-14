@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>TickTask - Tick off your ToDos</title>
+{% endblock %}
+
+{% block body %}
+    <header>
+        <img src="{{ url_for('static', filename='icons/ic_home.svg') }}" alt="Header icon">
+        <h1>Tasks</h1>
+    </header>
+    <div class="date">
+        14 November, 2023
+    </div>
+    <main>
+        <form action="" method="post">
+            <input type="text" placeholder="Add a task">
+        </form>
+    </main>
+{% endblock %}
