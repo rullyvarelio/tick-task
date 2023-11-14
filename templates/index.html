@@ -1,20 +1,19 @@
 {% extends "base.html" %}
 
-{% block head %}
-    <title>TickTask - Tick off your ToDos</title>
+{% block title %}
+    TickTask - Tick off your ToDos
 {% endblock %}
 
-{% block body %}
-    <header>
-        <img src="{{ url_for('static', filename='icons/ic_home.svg') }}" alt="Header icon">
-        <h1>Tasks</h1>
-    </header>
+{% block header %}
+    <h1>Today</h1>
     <div class="date">
-        14 November, 2023
+        {{date_now}}
     </div>
-    <main>
-        <form action="" method="post">
-            <input type="text" placeholder="Add a task">
-        </form>
-    </main>
+{% endblock %}
+
+{% block main %}
+    <form action="" method="post">
+        <input type="text" placeholder="Add a task">
+        <input type="submit" value="Submit">
+    </form>
 {% endblock %}

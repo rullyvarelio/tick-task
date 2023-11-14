@@ -11,9 +11,14 @@
                 font-family: Arial, Helvetica, sans-serif;
             }
         </style>
-        {% block head %}{% endblock %}
+        <title>{% block title %}{% endblock %}</title>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header>
+            {% block header %}{% endblock %}
+        </header>
+        <main>
+            {% block main %}{% endblock %}
+        </main>
     </body>
 </html>
