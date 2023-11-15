@@ -12,8 +12,26 @@
 {% endblock %}
 
 {% block main %}
-    <form action="" method="post">
-        <input type="text" placeholder="Add a task">
-        <input type="submit" value="Submit">
+    <table>
+        <tr>
+            <th>Task</th>
+            <th>Added</th>
+            <th>Actions</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.content }}</td>
+                <td>{{ task.date_created.date() }}</td>
+                <td>
+                    <a href="">Done</a><br>
+                    <a href="">Update</a><br>
+                    <a href="">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <form action="/" method="post">
+        <input type="text" placeholder="Add a task" id="content" name="content">
+        <input type="submit" value="Add task">
     </form>
 {% endblock %}
