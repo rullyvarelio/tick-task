@@ -19,22 +19,17 @@ date_format = f"{today_day}, {today_date} {today_month} {today_year}"
 
 class Todos(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
-    content = db.Column("content", db.String(100), nullable=False)
-    date_created = db.Column("date_created", db.DateTime, default=datetime.utcnow)
+    content = db.Column(db.String(100), nullable=False)
 
-    def __repr__(self):
-        return "<Task %r>" % self.id
-
-    # def __init__(self, content, date_created):
-    #     self.content = content
-    #     self.date_created = date_created
+    def __init__(self, content):
+        self.content = content
 
 
 @app.route("/", methods=["POST", "GET"])
 def index():
     if request.method == "POST":
         task_content = request.form["content"]
-        new_task = Todos(content=task_content)
+        new_task = Todos(task_content)
 
         try:
             db.session.add(new_task)
@@ -43,8 +38,20 @@ def index():
         except Exception as e:
             return f"There was an issue adding your task: {e}"
     else:
-        tasks = Todos.query.order_by(Todos.date_created).all()
+        tasks = Todos.query.order_by(Todos.id).all()
         return render_template("index.html", date_now=date_format, tasks=tasks)
+
+
+@app.route("/delete/<int:id>")
+def delete(id):
+    task_to_delete = Todos.query.get_or_404(id)
+
+    try:
+        db.session.delete(task_to_delete)
+        db.session.commit()
+        return redirect("/")
+    except Exception as e:
+        return f"There was an issue adding your task: {e}"
 
 
 if __name__ == "__main__":
