@@ -47,8 +47,13 @@ def index():
 @app.route("/check_task", methods=["POST", "GET"])
 def check_task():
     if request.method == "POST":
-        print(request.form.getlist("is_task_content_done"))
-        return redirect("/")
+        for task in Todos.query.all():
+            checkbox_name = f"task_{task.id}"
+
+            if checkbox_name in request.form:
+                task.is_task_done = True
+                db.session.commit()
+    return redirect("/")
 
 
 @app.route("/delete/<int:id>")

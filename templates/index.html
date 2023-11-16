@@ -18,12 +18,12 @@
             <th>Is the Task Done</th>
             <th>Actions</th>
         </tr>
-        <form action="/check_task" method="post">
+        <form action="/check_task" method="post" id="taskForm">
             {% for task in tasks %}
                 <tr>
                     <td>
-                        <input type="checkbox" name="is_task_content_done" id="is_task_content_done" value="True">
-                        <label for="is_task_content_done">
+                        <input type="checkbox" name="task_{{task.id}}" id="task_{{task.id}}" value=True onchange=submitForm()>
+                        <label for="task_{{task.id}}">
                             {{ task.task }}
                         </label>
                     </td>
@@ -33,13 +33,15 @@
                     </td>
                 </tr>
             {% endfor %}    
-            <tr>
-                <input type="submit" value="S">
-            </tr>
         </form>
     </table>
     <form action="/" method="post">
         <input type="text" placeholder="Add a task" id="task_content" name="task_content">
         <!-- <input type="submit" value="Add task"> -->
     </form>
+    <script>
+        function submitForm() {
+            document.getElementById("taskForm").submit();
+        }
+    </script>
 {% endblock %}
