@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todos.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todos.sqlite"
 
 db = SQLAlchemy(app)
 
@@ -19,16 +19,18 @@ date_format = f"{today_day}, {today_date} {today_month} {today_year}"
 
 class Todos(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
-    content = db.Column(db.String(100), nullable=False)
+    task = db.Column(db.String(100), nullable=False)
+    datetime_created = db.Column(db.DateTime, default=today)
+    is_task_done = db.Column(db.Boolean, default=False)
 
-    def __init__(self, content):
-        self.content = content
+    def __init__(self, task):
+        self.task = task
 
 
 @app.route("/", methods=["POST", "GET"])
 def index():
     if request.method == "POST":
-        task_content = request.form["content"]
+        task_content = request.form["task_content"]
         new_task = Todos(task_content)
 
         try:
@@ -40,6 +42,13 @@ def index():
     else:
         tasks = Todos.query.order_by(Todos.id).all()
         return render_template("index.html", date_now=date_format, tasks=tasks)
+
+
+@app.route("/check_task", methods=["POST", "GET"])
+def check_task():
+    if request.method == "POST":
+        print(request.form.getlist("is_task_content_done"))
+        return redirect("/")
 
 
 @app.route("/delete/<int:id>")

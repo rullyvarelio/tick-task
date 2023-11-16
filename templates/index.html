@@ -15,19 +15,31 @@
     <table>
         <tr>
             <th>Task</th>
+            <th>Is the Task Done</th>
             <th>Actions</th>
         </tr>
-        {% for task in tasks %}
+        <form action="/check_task" method="post">
+            {% for task in tasks %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="is_task_content_done" id="is_task_content_done" value="True">
+                        <label for="is_task_content_done">
+                            {{ task.task }}
+                        </label>
+                    </td>
+                    <td>{{ task.is_task_done }}</td>
+                    <td>
+                        <a href="/delete/{{task.id}}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}    
             <tr>
-                <td>{{ task.content }}</td>
-                <td>
-                    <a href="/delete/{{task.id}}">Delete</a>
-                </td>
+                <input type="submit" value="S">
             </tr>
-        {% endfor %}
+        </form>
     </table>
     <form action="/" method="post">
-        <input type="text" placeholder="Add a task" id="content" name="content">
-        <input type="submit" value="Add task">
+        <input type="text" placeholder="Add a task" id="task_content" name="task_content">
+        <!-- <input type="submit" value="Add task"> -->
     </form>
 {% endblock %}
