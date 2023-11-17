@@ -22,7 +22,7 @@
             {% for task in tasks %}
                 <tr>
                     <td>
-                        <input type="checkbox" name="task_{{task.id}}" id="task_{{task.id}}" value=True onchange=submitForm()>
+                        <input type="checkbox" name="task_{{task.id}}" id="task_{{task.id}}" value=True {% if task.is_task_done %}checked{% endif %}>
                         <label for="task_{{task.id}}">
                             {{ task.task }}
                         </label>
@@ -40,8 +40,13 @@
         <!-- <input type="submit" value="Add task"> -->
     </form>
     <script>
-        function submitForm() {
-            document.getElementById("taskForm").submit();
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener("change", function() {
+                    document.getElementById("taskForm").submit();
+                });
+            });
+        });
     </script>
 {% endblock %}
