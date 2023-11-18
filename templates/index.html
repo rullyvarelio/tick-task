@@ -22,13 +22,14 @@
             {% for task in tasks %}
                 <tr>
                     <td>
-                        <input type="checkbox" name="task_{{task.id}}" id="task_{{task.id}}" value=True {% if task.is_task_done %}checked{% endif %}>
+                        <input type="checkbox" name="task_{{task.id}}" id="task_{{task.id}}" value=True {% if task.is_task_done %}checked disabled{% endif %}>
                         <label for="task_{{task.id}}">
                             {{ task.task }}
                         </label>
                     </td>
                     <td>{{ task.is_task_done }}</td>
                     <td>
+                        <a href="/undo_task/{{task.id}}">Undo</a><br>
                         <a href="/delete/{{task.id}}">Delete</a>
                     </td>
                 </tr>

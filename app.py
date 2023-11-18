@@ -56,6 +56,18 @@ def check_task():
     return redirect("/")
 
 
+@app.route("/undo_task/<int:id>")
+def undo(id):
+    task_to_undo = Todos.query.get_or_404(id)
+
+    try:
+        task_to_undo.is_task_done = False
+        db.session.commit()
+        return redirect("/")
+    except Exception as e:
+        return f"There was an issue undoing your task: {e}"
+
+
 @app.route("/delete/<int:id>")
 def delete(id):
     task_to_delete = Todos.query.get_or_404(id)
@@ -65,7 +77,7 @@ def delete(id):
         db.session.commit()
         return redirect("/")
     except Exception as e:
-        return f"There was an issue adding your task: {e}"
+        return f"There was an issue deleting your task: {e}"
 
 
 if __name__ == "__main__":
