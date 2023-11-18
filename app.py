@@ -68,6 +68,21 @@ def undo(id):
         return f"There was an issue undoing your task: {e}"
 
 
+@app.route("/edit_task/<int:id>", methods=["POST", "GET"])
+def edit(id):
+    task = Todos.query.get_or_404(id)
+    if request.method == "POST":
+        task.task = request.form["task_content"]
+
+        try:
+            db.session.commit()
+            return redirect("/")
+        except Exception as e:
+            return f"There was an issue editing your task: {e}"
+    else:
+        return render_template("edit.html", task=task)
+
+
 @app.route("/delete/<int:id>")
 def delete(id):
     task_to_delete = Todos.query.get_or_404(id)

@@ -12,30 +12,38 @@
 {% endblock %}
 
 {% block main %}
-    <table>
-        <tr>
-            <th>Task</th>
-            <th>Is the Task Done</th>
-            <th>Actions</th>
-        </tr>
-        <form action="/check_task" method="post" id="taskForm">
-            {% for task in tasks %}
-                <tr>
-                    <td>
-                        <input type="checkbox" name="task_{{task.id}}" id="task_{{task.id}}" value=True {% if task.is_task_done %}checked disabled{% endif %}>
-                        <label for="task_{{task.id}}">
-                            {{ task.task }}
-                        </label>
-                    </td>
-                    <td>{{ task.is_task_done }}</td>
-                    <td>
-                        <a href="/undo_task/{{task.id}}">Undo</a><br>
-                        <a href="/delete/{{task.id}}">Delete</a>
-                    </td>
-                </tr>
-            {% endfor %}    
-        </form>
-    </table>
+    {% if tasks|length < 1 %}
+        <h4>You dont have any task</h4>
+
+    {% else %}
+        <table>
+            <tr>
+                <th>Task</th>
+                <th>Is the Task Done</th>
+                <th>Actions</th>
+            </tr>
+            <form action="/check_task" method="post" id="taskForm">
+                {% for task in tasks %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="task_{{task.id}}" id="task_{{task.id}}" value=True {% if task.is_task_done %}checked disabled{% endif %}>
+                            <label for="task_{{task.id}}">
+                                {{ task.task }}
+                            </label>
+                        </td>
+                        <td>{{ task.is_task_done }}</td>
+                        <td>
+                            {% if task.is_task_done == True %}
+                                <a href="/undo_task/{{task.id}}">Undo</a><br>
+                            {% endif %}
+                            <a href="/edit_task/{{task.id}}">Edit</a><br>
+                            <a href="/delete/{{task.id}}">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}    
+            </form>
+        </table>
+    {% endif %}
     <form action="/" method="post">
         <input type="text" placeholder="Add a task" id="task_content" name="task_content">
         <!-- <input type="submit" value="Add task"> -->

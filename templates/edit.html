@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Edit Task - TickTask
+{% endblock %}
+
+{% block main %}
+    <form action="/edit_task/{{task.id}}" method="post">
+        <input type="text" placeholder="Add a task" id="task_content" name="task_content" value="{{task.task}}">
+        <!-- <input type="submit" value="Add task"> -->
+    </form>
+{% endblock %}
