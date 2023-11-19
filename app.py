@@ -8,19 +8,12 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///todos.sqlite"
 db = SQLAlchemy(app)
 
 today = datetime.now()
-
-today_day = today.strftime("%A")
-today_date = today.strftime("%d")
-today_month = today.strftime("%B")
-today_year = today.strftime("%Y")
-
-date_format = f"{today_day}, {today_date} {today_month} {today_year}"
+date_format = f"{today.strftime('%A')}, {today.strftime('%d')} {today.strftime('%B')} {today.strftime('%Y')}"
 
 
 class Todos(db.Model):
     id = db.Column("id", db.Integer, primary_key=True)
     task = db.Column(db.String(100), nullable=False)
-    datetime_created = db.Column(db.DateTime, default=today)
     is_task_done = db.Column(db.Boolean, default=False)
 
     def __init__(self, task):
@@ -70,17 +63,16 @@ def undo(id):
 
 @app.route("/edit_task/<int:id>", methods=["POST", "GET"])
 def edit(id):
-    task = Todos.query.get_or_404(id)
+    task_to_update = Todos.query.get_or_404(id)
     if request.method == "POST":
-        task.task = request.form["task_content"]
+        task_to_update.task = request.form["task_content"]
 
         try:
             db.session.commit()
             return redirect("/")
         except Exception as e:
             return f"There was an issue editing your task: {e}"
-    else:
-        return render_template("edit.html", task=task)
+    return render_template("edit.html", task=task_to_update)
 
 
 @app.route("/delete/<int:id>")

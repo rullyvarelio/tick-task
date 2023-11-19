@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 1em 2em;
+    height: 100vh;
+}
+
+.header_title {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+}
+
+.header_title img {
+    width: 40px;
+    margin-right: .5em;
+}
