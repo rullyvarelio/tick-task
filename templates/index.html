@@ -17,7 +17,9 @@
 
     <main>
         {% if tasks|length < 1 %}
+        <div class="container">
             <h4>You dont have any task</h4>
+        </div>
 
         {% else %}
             <table>
@@ -48,7 +50,9 @@
                 </form>
             </table>
         {% endif %}
-
+    </main>
+    
+    <footer>
         <form class="task_form" action="/" method="post">
             <div class="task_field">
                 <img src="{{url_for('static', filename='vectors/add.svg')}}" alt="Add task icon">
@@ -57,5 +61,5 @@
             </div>
             <!-- <input type="submit" value="Add task"> -->
         </form>
-    </main>
+    </footer>
 {% endblock %}
