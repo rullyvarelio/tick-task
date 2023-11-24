@@ -9,15 +9,17 @@ body {
     height: 100vh;
     padding: 0 2em;
     flex-direction: column;
-    background-color: #f5f5f5;
+    background-color: #27374d;
 }
 
 header {
     position: sticky;
     top: 0;
     padding: 2em 0 20px 0;
+    color: #acc2cf;
     z-index: 999;
     background-color: inherit;
+    user-select: none;
 }
 
 header .header_title {
@@ -37,27 +39,27 @@ header .header_title img {
 
 main {
     padding: 0;
-    display: flex;
     overflow-y: auto;
     scrollbar-gutter: stable;
-    max-height: calc(100vh - 205px);
+    height: calc(100vh - 205px);
 }
 
-main table {
-    width: 100%;
-    z-index: 1;
+main .task_list {
+    color: white;
 }
 
-main table, tr, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+main .task_list ul li {
+    padding: 0.8em 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 footer {
     position: fixed;
     padding: 7px 0 2.5em 0;
     bottom: 0;
-    background-color: #f5f5f5;
+    background-color: #27374d;
     left: 0;
     width: 100%;
     z-index: 999;
@@ -66,7 +68,8 @@ footer {
 footer .task_field {
     display: flex;
     margin: 0 2em;
-    background-color: #ffffff;
+    background-color: #526d82;
+    border-radius: 5px;
     padding: 0.5em 0.3em;
 }
 
@@ -79,8 +82,38 @@ footer .task_form .task_field input[type=text] {
     width: 100%;
     border: none;
     font-size: 16px;
+    background-color: #526d82;
+    color: #ffffff;
+}
+
+footer .task_form .task_field input[type=text]::placeholder {
+    color: #dde6ed;
+    user-select: none;
+    
 }
 
 footer .task_form .task_field input[type=text]:focus {
     outline: none;
+}
+
+main .container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 205px);
+    user-select: none;
+}
+
+main .container img {
+    width: 230px;
+    margin-bottom: 10px;
+}
+
+main .container p {
+    text-align: center;
+    color: rgba(156, 177, 191, 0.7);
+    font-size: 0.8em;
+    word-spacing: 0.1em;
 }
